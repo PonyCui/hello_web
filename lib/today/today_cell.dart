@@ -1,4 +1,6 @@
 import 'package:flutter_web/material.dart';
+import 'package:hello_web/common/utils/spring_curve.dart';
+import 'package:hello_web/detail/detail_page.dart';
 
 class TodayCell extends StatefulWidget {
   @override
@@ -22,11 +24,21 @@ class _TodayCellState extends State<TodayCell>
   }
 
   setupAnimationController() {
-    animationController = AnimationController(vsync: this);
+    animationController =
+        AnimationController(vsync: this, lowerBound: -1.0, upperBound: 2.0);
     animationController.value = 1.0;
     animationController.addListener(() {
       setState(() {});
     });
+  }
+
+  onPressed() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => DetailPage(),
+        fullscreenDialog: true,
+      ),
+    );
   }
 
   @override
@@ -36,21 +48,22 @@ class _TodayCellState extends State<TodayCell>
         animationController.animateTo(
           0.0,
           duration: Duration(milliseconds: 500),
-          curve: Curves.ease,
+          curve: SpringCurve(b: 6.0),
         );
       },
       onTapUp: (_) {
+        onPressed();
         animationController.animateTo(
           1.0,
           duration: Duration(milliseconds: 500),
-          curve: Curves.ease,
+          curve: SpringCurve(b: 6.0),
         );
       },
       onTapCancel: () {
         animationController.animateTo(
           1.0,
           duration: Duration(milliseconds: 500),
-          curve: Curves.ease,
+          curve: SpringCurve(b: 6.0),
         );
       },
       child: Transform.scale(

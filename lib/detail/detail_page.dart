@@ -1,10 +1,15 @@
 import 'package:flutter_web/material.dart';
+import 'package:hello_web/common/entities/app_item.dart';
 import 'package:hello_web/common/utils/spring_curve.dart';
 import 'detail_header.dart';
 import 'detail_content.dart';
 import 'overlay_bar.dart';
 
 class DetailPage extends StatefulWidget {
+  final AppItem appItem;
+
+  DetailPage({@required this.appItem});
+
   @override
   State<StatefulWidget> createState() {
     return _DetailPageState();
@@ -91,7 +96,9 @@ class _DetailPageState extends State<DetailPage>
       height: 75,
       child: Transform.translate(
         offset: Offset(0.0, 100 * (1.0 - overlayBarAnimationController.value)),
-        child: OverlayBar(),
+        child: OverlayBar(
+          appItem: widget.appItem,
+        ),
       ),
     );
   }
@@ -113,8 +120,12 @@ class _DetailPageState extends State<DetailPage>
             child: ListView(
               padding: EdgeInsets.only(bottom: 100),
               children: <Widget>[
-                DetailHeader(),
-                DetailContent(),
+                DetailHeader(
+                  appItem: widget.appItem,
+                ),
+                DetailContent(
+                  appItem: widget.appItem,
+                ),
               ],
             ),
           ),

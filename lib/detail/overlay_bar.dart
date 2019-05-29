@@ -1,6 +1,11 @@
 import 'package:flutter_web/material.dart';
+import 'package:hello_web/common/entities/app_item.dart';
 
 class OverlayBar extends StatelessWidget {
+  final AppItem appItem;
+
+  OverlayBar({@required this.appItem});
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -67,14 +72,14 @@ class OverlayBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            "跨越星弧",
+            appItem.appName,
             style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
                 color: Color.fromARGB(255, 25, 25, 25)),
           ),
           Text(
-            "佛系杀时间的星际探险手游",
+            appItem.appSummary,
             style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.normal,
@@ -94,7 +99,7 @@ class OverlayBar extends StatelessWidget {
         child: Container(
           width: 48,
           height: 48,
-          color: Colors.green,
+          child: Image.asset("mock/${appItem.appIcon}"),
         ),
       ),
     );

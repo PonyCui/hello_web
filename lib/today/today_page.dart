@@ -1,5 +1,8 @@
 import 'package:flutter_web/material.dart';
-import 'today_cell.dart';
+import 'package:hello_web/common/arch/arch.dart';
+import 'package:hello_web/today/today_page_presenter.dart';
+import 'cover_type_cell_1.dart';
+import 'cover_type_cell_2.dart';
 
 class TodayPage extends StatefulWidget {
   @override
@@ -8,7 +11,10 @@ class TodayPage extends StatefulWidget {
   }
 }
 
-class _TodayState extends State<TodayPage> {
+class _TodayState extends PageState<TodayPage, TodayPagePresenter> {
+  _TodayState() {
+    eventHandler = TodayPagePresenter();
+  }
 
   Widget renderHeader() {
     return Padding(
@@ -17,7 +23,7 @@ class _TodayState extends State<TodayPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "5月28日 星期二",
+            eventHandler.defaultInteractor.currentDay,
             style: TextStyle(
               color: Colors.grey,
               fontSize: 14,
@@ -43,7 +49,7 @@ class _TodayState extends State<TodayPage> {
                     width: 36,
                     height: 36,
                     child: Image.network(
-                      "https://avatars0.githubusercontent.com/u/5013664?s=460&v=4",
+                      eventHandler.defaultInteractor.currentUserAvatar,
                     ),
                   ),
                 )
@@ -63,10 +69,21 @@ class _TodayState extends State<TodayPage> {
           if (index == 0) {
             return renderHeader();
           } else {
-            return TodayCell();
+            if (eventHandler.defaultInteractor.items[index - 1].coverType ==
+                2) {
+              return CoverTypeCell_2(
+                appItem: eventHandler.defaultInteractor.items[index - 1],
+                eventHandler: eventHandler,
+              );
+            } else {
+              return CoverTypeCell_1(
+                appItem: eventHandler.defaultInteractor.items[index - 1],
+                eventHandler: eventHandler,
+              );
+            }
           }
         },
-        itemCount: 10,
+        itemCount: eventHandler.defaultInteractor.items.length + 1,
       ),
     );
   }

@@ -1,6 +1,11 @@
 import 'package:flutter_web/material.dart';
+import 'package:hello_web/common/entities/app_item.dart';
 
 class DetailHeader extends StatelessWidget {
+  final AppItem appItem;
+
+  DetailHeader({@required this.appItem});
+
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
@@ -10,8 +15,8 @@ class DetailHeader extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Positioned.fill(
-              child: Image.network(
-                "https://i.loli.net/2019/05/28/5ced5870e5eb877483.jpeg",
+              child: Image.asset(
+                "mock/${appItem.coverURLString}",
                 fit: BoxFit.cover,
               ),
             ),
@@ -24,7 +29,7 @@ class DetailHeader extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "主打推荐",
+                    appItem.type,
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey,
@@ -34,7 +39,7 @@ class DetailHeader extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 4.0),
                     child: Text(
-                      "我不做人啦！",
+                      appItem.title,
                       style: TextStyle(
                         fontSize: 26,
                         color: Colors.white,
@@ -46,7 +51,7 @@ class DetailHeader extends StatelessWidget {
                     child: Container(),
                   ),
                   Text(
-                    "在《Man or Vampire》中做出抉择",
+                    appItem.summary,
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.white,
